@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import {  createMaterialTopTabNavigator } from 'react-navigation';
+import {  createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import Card from './Card'
 import sample from './setup.json'
+import CardContent from './CardContent';
 
 // export default Deck;
 _onPress = () => {
     this.props.onPressItem(this.props.id);
   };
+
 
 class Deck extends Component {
   render() {
@@ -18,9 +20,7 @@ class Deck extends Component {
         <TouchableOpacity 
           key={id}
           onPress={() =>
-            this.props.navigation.navigate('Card', {
-                title: title,
-            })}
+            this.props.navigation.navigate('CardContent')}
         >
           <Card
             title={c.title}
@@ -42,4 +42,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Deck;
+const DeckStack = createStackNavigator({
+    Deck: Deck,
+    Card: CardContent,
+  });
+export default DeckStack;

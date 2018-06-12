@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import NewDecks from './NewDecks';
-import Deck from "./Deck";
+import DeckStack from "./Deck";
 
 
 const Main = createMaterialTopTabNavigator
 ({
-  Deck: Deck,
+  Deck: DeckStack,
   NewDecks: NewDecks,
 },
 {

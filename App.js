@@ -1,11 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo';
-import { createMaterialTopTabNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import NewDecks from './components/NewDecks';
 import Deck from './components/Deck';
 
-export default createMaterialTopTabNavigator({
+
+// const HomeStack = createStackNavigator({
+//   Home: HomeScreen,
+//   Details: DetailsScreen,
+// });
+
+
+const Tab = createMaterialTopTabNavigator({
   Deck: Deck,
   NewDecks: NewDecks,
   },
@@ -19,24 +26,24 @@ export default createMaterialTopTabNavigator({
     style: {
       backgroundColor: 'white',
     },
-    }
+    },
   },
 );
-
+export default Tab;
 // export default class App extends React.Component {
 //   render() {
 //     return (
-//       <View style={styles.container}>
-//         <Main />
+//       <View>
+//         <Tab />
 //       </View>
 //     );
 //   }
 // }
 
 // const styles = StyleSheet.create({
-//   statusBar: {
-//     backgroundColor: "#C2185B",
-//   },
+//   // statusBar: {
+//   //   backgroundColor: "#C2185B",
+//   // },
 //   container: {
 //     flex: 1,
 //     backgroundColor: '#fff',
