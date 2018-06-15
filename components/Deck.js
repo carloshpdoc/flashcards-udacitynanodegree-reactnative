@@ -12,15 +12,23 @@ _onPress = () => {
 
 
 class Deck extends Component {
+    static navigationOptions = {
+        headerTitle: 'Deck',
+    };
   render() {
       const card = Object.values(sample);
     return (
         <View style={styles.container}>
+        {console.log('')}
         {card && card.map((c, id) => (
         <TouchableOpacity 
           key={id}
           onPress={() =>
-            this.props.navigation.navigate('CardContent')}
+             this.props.navigation.navigate('DeckStart', { 
+                title: c.title,
+                countCard:c.questions.length 
+                })
+            }
         >
           <Card
             title={c.title}
@@ -42,8 +50,4 @@ const styles = StyleSheet.create({
     },
 });
 
-const DeckStack = createStackNavigator({
-    Deck: Deck,
-    Card: CardContent,
-  });
-export default DeckStack;
+export default Deck;

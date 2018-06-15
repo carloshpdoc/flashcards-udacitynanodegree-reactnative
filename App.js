@@ -1,10 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Constants } from 'expo';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import NewDecks from './components/NewDecks';
 import Deck from './components/Deck';
+import StartQuiz from './components/StartQuiz';
 
+const CustomStatusBar = ({ backgroundColor, ...props }) => {
+  return (
+    <View style={{backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar
+        translucent
+        backgroundColor={backgroundColor}
+        {...props}
+      />
+    </View>
+  );
+}
 
 // const HomeStack = createStackNavigator({
 //   Home: HomeScreen,
@@ -29,7 +41,66 @@ const Tab = createMaterialTopTabNavigator({
     },
   },
 );
-export default Tab;
+
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: Tab,
+    navigationOptions: {
+      headerBackTitle: null,
+      headerStyle: {
+        backgroundColor: "white"
+      }
+    }
+  },
+  DeckStart: {
+    screen: StartQuiz,
+      navigationOptions: ({ navigation }) => ({
+        title: `${navigation.state.params.title}`,
+        headerTintColor: "black",
+        headerStyle: {
+          backgroundColor: "white"
+  
+        }
+    }),
+  },
+  // AddQuestion: {
+  //   screen: AddQuestion,
+  //   navigationOptions: {
+  //     headerTintColor: "white",
+  //     headerStyle: {
+  //       backgroundColor: "purple"
+
+  //     }
+  //   }
+  // },
+  // QuizMain: {
+  //   screen: QuizMain,
+  //   navigationOptions: {
+  //     headerTintColor: "white",
+  //     headerStyle: {
+  //       backgroundColor: "purple"
+
+  //     }
+  //   }
+  // }
+});
+class App extends React.Component {
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+          <CustomStatusBar
+            backgroundColor="white"
+            barStyle="dark-content"
+          />
+          <MainNavigator />
+       </View>
+    );
+  }
+}
+
+
+export default App;
 // export default class App extends React.Component {
 //   render() {
 //     return (
