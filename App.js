@@ -46,6 +46,7 @@ const MainNavigator = createStackNavigator({
   Home: {
     screen: Tab,
     navigationOptions: {
+      title: "Quiz",
       headerBackTitle: null,
       headerStyle: {
         backgroundColor: "white"

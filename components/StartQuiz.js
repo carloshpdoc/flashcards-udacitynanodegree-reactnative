@@ -1,9 +1,12 @@
 import React, { Fragment, Component } from 'react';
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Card from './Card';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import {  createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import { purple, gray, white } from '../utils/colors'
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 _onPress = () => {
     this.props.onPressItem(this.props.id);
@@ -21,20 +24,22 @@ class StartQuiz extends Component {
 //        countCard: this.props.navigation.state.params.countCard,
 //    })
 //  }
+  
   render() {
     const { title, countCard } = this.props.navigation.state.params;
-    
+    const myIcon = (<Icon name="arrow-long-right" size={30} color="#900" />);
+
     return (
       <View style={styles.container}>  
         <Card
             title={title}
             countCard={countCard}
         />
-        <TouchableOpacity
-              style={[styles.iosBtn, {borderTopRightRadius: 0, borderBottomRightRadius: 0}]}
-              onPress={_onPress}>
-                <Entypo name='minus' size={350} color={purple} />
-           </TouchableOpacity>
+        <Button
+          onPress={_onPress}
+          myIcon
+         title='BUTTON WITH ICON OBJECT'
+        />
       </View>
       );
   };
