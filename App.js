@@ -59,8 +59,7 @@ const MainNavigator = createStackNavigator({
         title: `${navigation.state.params.title}`,
         headerTintColor: "black",
         headerStyle: {
-          backgroundColor: "white"
-  
+          backgroundColor: "white",
         }
     }),
   },

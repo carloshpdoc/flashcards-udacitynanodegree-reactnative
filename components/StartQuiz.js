@@ -1,12 +1,8 @@
-import React, { Fragment, Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Card from './Card';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
-import {  createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
-import { purple, gray, white } from '../utils/colors'
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { Button, Icon } from 'react-native-elements';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 
 _onPress = () => {
     this.props.onPressItem(this.props.id);
@@ -27,19 +23,52 @@ class StartQuiz extends Component {
   
   render() {
     const { title, countCard } = this.props.navigation.state.params;
-    const myIcon = (<Icon name="arrow-long-right" size={30} color="#900" />);
-
+    
     return (
       <View style={styles.container}>  
         <Card
             title={title}
             countCard={countCard}
         />
+      <View style={{marginBottom: 10}}>  
         <Button
-          onPress={_onPress}
-          myIcon
-         title='BUTTON WITH ICON OBJECT'
+          icon={
+            <Icon
+              name='arrow-right'
+              size={40}
+              color='pink'
+            />
+          }
+          buttonStyle={{
+            backgroundColor: "rgba(92, 99,216, 1)",
+            width: 300,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 5
+          }}
+          title='Add Card'
         />
+        <Button
+          icon={
+            <Icon
+              name='arrow-left'
+              size={15}
+              color='pink'
+            />
+          }
+          buttonStyle={{
+            backgroundColor: "rgba(0,255,0,0.3)",
+            width: 300,
+            height: 45,
+            marginTop: 10,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 5
+          }}
+          title='Start Quiz'
+        />
+        </View>
       </View>
       );
   };
@@ -75,6 +104,8 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
+      justifyContent: 'space-between'
+      
     },
 });
 
