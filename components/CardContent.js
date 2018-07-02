@@ -4,9 +4,9 @@ import {  createMaterialTopTabNavigator, createStackNavigator } from 'react-navi
 import Card from './Card'
 import sample from './setup.json'
 
-_onPress = () => {
-    this.props.onPressItem(this.props.id);
-  };
+// _onPress = () => {
+//     this.props.onPressItem(this.props.id);
+//   };
 
   class CardContent extends Component {
     render() {

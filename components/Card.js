@@ -2,9 +2,9 @@ import React, { Fragment, Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import {  createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 
-_onPress = () => {
-    this.props.onPressItem(this.props.id);
-  };
+// _onPress = () => {
+//     this.props.onPressItem(this.props.id);
+//   };
 
 class Card extends Component {
   render() {

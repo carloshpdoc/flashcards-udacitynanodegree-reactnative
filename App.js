@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { Constants } from 'expo';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import NewDecks from './components/NewDecks';
@@ -24,9 +24,10 @@ const CustomStatusBar = ({ backgroundColor, ...props }) => {
 // });
 
 
-const Tab = createMaterialTopTabNavigator({
-  Deck: Deck,
-  NewDecks: NewDecks,
+const Tab = createMaterialTopTabNavigator(
+  {
+    Deck: Deck,
+    NewDecks: NewDecks,
   },
   {
     tabBarOptions: {
@@ -63,8 +64,8 @@ const MainNavigator = createStackNavigator({
         }
     }),
   },
-  // AddQuestion: {
-  //   screen: AddQuestion,
+  // AddCard: {
+  //   screen: AddA,
   //   navigationOptions: {
   //     headerTintColor: "white",
   //     headerStyle: {
