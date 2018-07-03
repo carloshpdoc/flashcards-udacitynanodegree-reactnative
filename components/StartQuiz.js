@@ -19,12 +19,11 @@ class StartQuiz extends Component {
   submitData = async _ => {
     const key = this.props.navigation.state.params.title;
     const data = await retrieveData(key);
-    console.log('data: ', data.questions);
-
+  
     data['questions'].push({ question: this.state.question, answer:this.state.answer });
 
     await storeSaveData(this.props.navigation.state.params.title, data);
-    await this.setState({modalVisible: true});
+    await this.setState({modalVisible: false});
   }
 
   _onPress = () => {
