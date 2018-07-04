@@ -3,13 +3,19 @@ import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'reac
 import Card from './Card';
 import { Button, Icon } from 'react-native-elements';
 import { storeSaveData, retrieveData } from '../helpers/index';
+import { StackActions, NavigationActions } from 'react-navigation';
+
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
 class StartQuiz extends Component {
+//   static navigationOptions= ({ navigation }) => {
+//     headerTitle: 'TEST',
+// };
   state = {
     modalVisible: false,
     question: '',
     answer: '',
+    dataCard: '',
   };
 
   setModalVisible(visible) {
@@ -20,10 +26,10 @@ class StartQuiz extends Component {
     const key = this.props.navigation.state.params.title;
     const data = await retrieveData(key);
   
-    data['questions'].push({ question: this.state.question, answer:this.state.answer });
-
+    data['questions'].push({ question: this.state.question, answer: this.state.answer });
     await storeSaveData(this.props.navigation.state.params.title, data);
-    await this.setState({modalVisible: false});
+    await this.setState({dataCard: data, modalVisible: false});
+    this.props.navigation.setParams({ increaseCount: 'backDeck' });
   }
 
   _onPress = () => {
@@ -42,7 +48,16 @@ class StartQuiz extends Component {
 //  }
   
   render() {
-    const { title, countCard } = this.props.navigation.state.params;
+    let title, countCard;
+    if(this.state.dataCard) {
+      title = this.state.dataCard.title;
+      countCard = (this.state.dataCard.questions).length;
+      console.log('questions: ', this.state.dataCard.questions);
+    } else {
+      title = this.props.navigation.state.params.title;
+      countCard = this.props.navigation.state.params.countCard;
+    }
+    // const { title, countCard } = this.props.navigation.state.params;
     
     return (
       <View style={styles.container}>  
@@ -137,7 +152,7 @@ class StartQuiz extends Component {
             />
           }
           buttonStyle={{
-            backgroundColor: "rgba(0,255,0,0.3)",
+            backgroundColor: "#00A7E1",
             width: 300,
             height: 45,
             marginTop: 10,

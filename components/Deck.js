@@ -1,29 +1,50 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Card from './Card'
-import { retrieveData, storeData, retrieveAllData } from '../helpers/index';
+import { retrieveAllData } from '../helpers/index';
 
 // export default Deck;
 // _onPress = () => {
 //     this.props.onPressItem(this.props.id);
 //   };
-
+const test = () =>{
+  console.log('foi');
+};
 
 class Deck extends Component {
+  static navigationOptions = {
+    headerTitle: 'Deck',
+    header: {
+       visible: test, // nope :/
+     },
+  };
     static navigationOptions = {
-        headerTitle: 'Deck',
+       
     };
     constructor(props) {
       super(props);
       this.state ={
-        data: [],
+        data: '',
         isLoading: true,
       };
-  }
-    
+  };
+  
   async componentDidMount(){
     let AllData = await retrieveAllData();  
-    this.setState({ data: AllData, isLoading: false });
+    await this.setState({ data: AllData, isLoading: false });
+console.log(test);
+    const b = this.props.navigation.getParam('increaseCount');
+    console.log('back');
+    if(b === 'backDeck'){
+      console.log('sdtestets');
+      this.setState({ isLoading: false });
+    }
+  }
+
+  async componentWillReceiveProps(){
+    let AllData = await retrieveAllData();  
+    console.log('props');
+    await this.setState({ data: AllData, isLoading: false });
   }
 
   render() {
@@ -31,7 +52,6 @@ class Deck extends Component {
         return <Text>Loading...</Text>
       } else {
         const { data } = this.state;
-        console.log('data: ', data);
         return (
           <View style={styles.container}>
           {data && data.map((r, id, arr) => (

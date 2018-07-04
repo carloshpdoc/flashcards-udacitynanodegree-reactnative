@@ -35,14 +35,25 @@ export const storeSaveData = async (key, data) => {
         return keys ;
       });
 
-      if(allKeys === null || allKeys.length == 0 ) {
+      if(allKeys === null || allKeys.length === 0 ) {
         await AsyncStorage.multiSet([['React', JSON.stringify(dataStore[0])], ['JavaScript', JSON.stringify(dataStore[1])]]);
       }
 
-      result = await AsyncStorage.multiGet(allKeys).then(data => {
-        return data ;
+      // let value = await AsyncStorage.getItem('React');
+      // result = allKeys.map((key)=>{
+      //   AsyncStorage.getItem(key, (err, r) => {
+      //     console.log(r);
+      //     return r;
+      //   });
+      // })
+      receive = await AsyncStorage.multiGet(allKeys).then(data => {
+          return data;
       });
-       
+
+      result = receive.map((r, i, a)=>{
+        let value = JSON.parse(a[i][1]);
+        return value;
+      });
       //   AsyncStorage.multiGet(keys, (err, stores) => {
       //     stores.map((result, i, store) => {
       //       // get at each store's key/value so you can work with it
@@ -56,8 +67,9 @@ export const storeSaveData = async (key, data) => {
       //   value = dataStore[key];
       //   await storeData(key, value);
       // }
-     return JSON.parse(result);
+     return result;
      } catch (error) {
+       console.log('error: ', error);
        const cards = dataStore;
        return cards;
      }
