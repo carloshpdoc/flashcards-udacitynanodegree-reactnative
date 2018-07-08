@@ -4,7 +4,8 @@ import { Constants } from 'expo';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import NewDecks from './components/NewDecks';
 import Deck from './components/Deck';
-import StartQuiz from './components/StartQuiz';
+import MainQuiz from './components/MainQuiz';
+import AddCard from './components/addCard';
 
 const CustomStatusBar = ({ backgroundColor, ...props }) => {
   return (
@@ -27,7 +28,7 @@ const CustomStatusBar = ({ backgroundColor, ...props }) => {
 const Tab = createMaterialTopTabNavigator(
   {
     Deck: Deck,
-    NewDecks: NewDecks,
+    NewDeck: NewDecks,
   },
   {
     tabBarOptions: {
@@ -55,7 +56,7 @@ const MainNavigator = createStackNavigator({
     }
   },
   DeckStart: {
-    screen: StartQuiz,
+    screen: MainQuiz,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.title}`,
         headerTintColor: "black",
@@ -64,16 +65,15 @@ const MainNavigator = createStackNavigator({
         }
     }),
   },
-  // AddCard: {
-  //   screen: AddA,
-  //   navigationOptions: {
-  //     headerTintColor: "white",
-  //     headerStyle: {
-  //       backgroundColor: "purple"
-
-  //     }
-  //   }
-  // },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      headerTintColor: "black",
+      headerStyle: {
+        backgroundColor: "white",
+      }
+    }
+  },
   // QuizMain: {
   //   screen: QuizMain,
   //   navigationOptions: {

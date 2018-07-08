@@ -3,11 +3,10 @@ import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'reac
 import Card from './Card';
 import { Button, Icon } from 'react-native-elements';
 import { storeSaveData, retrieveData } from '../helpers/index';
-import { StackActions, NavigationActions } from 'react-navigation';
 
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
-class StartQuiz extends Component {
+class MainQuiz extends Component {
 //   static navigationOptions= ({ navigation }) => {
 //     headerTitle: 'TEST',
 // };
@@ -32,7 +31,7 @@ class StartQuiz extends Component {
     this.props.navigation.setParams({ increaseCount: 'backDeck' });
   }
 
-  _onPress = () => {
+  _AddQuestion = () => {
     this.setModalVisible(true);
   };
 // state = {
@@ -69,9 +68,7 @@ class StartQuiz extends Component {
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}>
+         >
           <View style={{ marginTop: 20,}}>
             <View style={styles.modal}>
               <Text>Question:</Text>
@@ -132,7 +129,7 @@ class StartQuiz extends Component {
               color='pink'
             />
           }
-          onPress={this._onPress}
+          onPress={this.AddQuestion}
           buttonStyle={{
             backgroundColor: "rgba(92, 99,216, 1)",
             width: 300,
@@ -151,6 +148,7 @@ class StartQuiz extends Component {
               color='pink'
             />
           }
+          onPress={this.StartQuiz}
           buttonStyle={{
             backgroundColor: "#00A7E1",
             width: 300,
@@ -210,4 +208,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default StartQuiz;
+export default MainQuiz;

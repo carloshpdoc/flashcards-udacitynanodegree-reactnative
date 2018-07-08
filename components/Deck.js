@@ -1,50 +1,30 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Card from './Card'
-import { retrieveAllData } from '../helpers/index';
-
-// export default Deck;
-// _onPress = () => {
-//     this.props.onPressItem(this.props.id);
-//   };
-const test = () =>{
-  console.log('foi');
-};
+import { retrieveAllData, setLocalNotification } from '../helpers/index';
 
 class Deck extends Component {
   static navigationOptions = {
     headerTitle: 'Deck',
-    header: {
-       visible: test, // nope :/
-     },
   };
-    static navigationOptions = {
-       
-    };
-    constructor(props) {
-      super(props);
-      this.state ={
-        data: '',
-        isLoading: true,
-      };
+  
+  state = {
+    data: '',
+    isLoading: true,
+  };
+
+  receiveData = async () =>{
+    let AllData = await retrieveAllData();  
+    await this.setState({ data: AllData, isLoading: false });
+    await setLocalNotification();
   };
   
   async componentDidMount(){
-    let AllData = await retrieveAllData();  
-    await this.setState({ data: AllData, isLoading: false });
-console.log(test);
-    const b = this.props.navigation.getParam('increaseCount');
-    console.log('back');
-    if(b === 'backDeck'){
-      console.log('sdtestets');
-      this.setState({ isLoading: false });
-    }
+    this.receiveData();
   }
 
   async componentWillReceiveProps(){
-    let AllData = await retrieveAllData();  
-    console.log('props');
-    await this.setState({ data: AllData, isLoading: false });
+    this.receiveData();
   }
 
   render() {
@@ -53,24 +33,26 @@ console.log(test);
       } else {
         const { data } = this.state;
         return (
-          <View style={styles.container}>
-          {data && data.map((r, id, arr) => (
-            <TouchableOpacity 
-              key={id}
-              onPress={() =>
-                this.props.navigation.navigate('DeckStart', { 
-                    title: arr[id].title,
-                    countCard: arr[id].questions.length,
-                    })
-                }
-            >
-              <Card
-                title={arr[id].title}
-                countCard={arr[id].questions.length}
-              />
-            </TouchableOpacity>
-            ))}
-            </View>
+          <ScrollView>
+            <View style={styles.container}>
+            {data && data.map((r, id, arr) => (
+              <TouchableOpacity 
+                key={id}
+                onPress={() =>
+                  this.props.navigation.navigate('DeckStart', { 
+                      title: arr[id].title,
+                      countCard: arr[id].questions.length,
+                      })
+                  }
+              >
+                <Card
+                  title={arr[id].title}
+                  countCard={arr[id].questions.length}
+                />
+              </TouchableOpacity>
+              ))}
+              </View>
+          </ScrollView>
         );
       }
   };
@@ -81,6 +63,7 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
+      backgroundColor: "#fff",
     //   justifyContent: 'space-evenly'
     },
 });
