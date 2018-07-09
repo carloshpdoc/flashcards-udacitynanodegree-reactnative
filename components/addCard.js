@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TextInput, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { storeSaveData, retrieveData } from '../helpers/index';
+import { storeSaveData } from '../helpers/index';
 
 
 class addCard extends Component {
@@ -35,8 +35,6 @@ submitCard = async _ => {
 }
 
 render() {
-    // const title = this.props.navigation.getParam('title');
-  //  console.log('title: ', this.state.title);
     return (
         <View style={styles.container}>
             <View style={styles.modal}>

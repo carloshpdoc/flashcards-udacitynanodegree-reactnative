@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'react-native';
+import { View, StyleSheet, Modal, TextInput, Text } from 'react-native';
 import Card from './Card';
 import { Button, Icon } from 'react-native-elements';
 import { storeSaveData, retrieveData } from '../helpers/index';
 
-// import Icon from 'react-native-vector-icons/FontAwesome';
-
 class MainQuiz extends Component {
-//   static navigationOptions= ({ navigation }) => {
-//     headerTitle: 'TEST',
-// };
   state = {
     modalVisible: false,
     question: '',
@@ -43,17 +38,6 @@ class MainQuiz extends Component {
       title: data.title, questions: data.questions, dataCard: data, countCard: (data.questions).length,
     });
   }
-// state = {
-//     title: '',
-//     countCard: '',
-// }
-//  componentDidMount(){
-//    console.log('navigation: ', this.props.navigation);
-//    this.setState({
-//        title: this.props.navigation.state.params.title,
-//        countCard: this.props.navigation.state.params.countCard,
-//    })
-//  }
   
   render() {
     let title, countCard;
@@ -64,8 +48,7 @@ class MainQuiz extends Component {
       title = this.props.navigation.state.params.title;
       countCard = this.props.navigation.state.params.countCard;
     }
-    // const { title, countCard } = this.props.navigation.state.params;
-    
+ 
     return (
       <View style={styles.container}>  
         <Card
@@ -173,31 +156,6 @@ class MainQuiz extends Component {
       );
   };
 }
-
-// const styles = StyleSheet.create({
-//     card: {
-//       borderWidth: 3,
-//       borderRadius: 3,
-//       borderColor: '#000',
-//       width: 300,
-//       height: 100,
-//       padding: 10,
-//       marginTop: 20,
-//       paddingTop: 20
-//     },
-//     content:{
-//       marginTop: 5,
-//       alignItems: 'center'
-//     },
-//     titleText: {
-//       fontSize: 20,
-//       fontWeight: 'bold',
-//     },
-//     textCount:{
-//       marginTop: 5,
-//       color: '#757575',
-//     }
-// });
 
 const styles = StyleSheet.create({
     container: {

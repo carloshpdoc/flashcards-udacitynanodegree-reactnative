@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Button } from 'react-native-elements';
-import { storeSaveData, retrieveData } from '../helpers/index';
 
 class Quiz extends Component {
 state = {
@@ -19,38 +18,17 @@ state = {
 };
 
 onCorrect = (question) => {
-    // this.props.navigation.navigate('Quiz');
-    // const questions = this.state.dataCard.questions.filter((dc)=> dc.question !== question ); 
-    
     this.setState({
-        // questions: questions,
         questionIndex: this.state.questionIndex +1,
         count: this.state.count + 1, 
     }); 
     this.showAnswer();
-    // const {questionIndex, correctAnswers} = this.state;
-    // this.setState({questionIndex: questionIndex + 1, correctAnswers: correctAnswers + 1, shouldShowAnswer: false});
 };
-
-// shouldComponentUpdate(nextProps, nextState) {
-//     return nextState.state.length > 0;
-//     // !deepEquals(render(this.state), render(nextState))
-// }
 
  componentDidMount(){
     this.setState({dataCard: this.props.navigation.getParam('dataCard'),
     questions: this.props.navigation.getParam('questions'),
     isLoading: false });
-    // data.map((v)=>{
-      
-    // })
-    // var index = data.indexOf(question);
-    // if (index > -1) {
-    //     array.splice(index, 1);
-    // }
-    // this.state.dataCard.map((v)=>{
-    //     console.log('v: ', v);
-    // })
 }
 showAnswer = () => {
     this.setState({ disabled: !this.state.disabled, showAnswer: !this.state.showAnswer});
@@ -65,10 +43,6 @@ render() {
         disabled } = this.state;
     const { question, answer } = questions[questionIndex];
   
-    // console.log('question: ', question);
-    // const { answer } = questions[questionIndex];
-    // const questionAvailable = questionIndex < countQuestions;
-    // const questionMode = countQuestions - questionIndex;
 return(
     <View style={styles.container}>
     {!lastScene ? (
@@ -132,26 +106,25 @@ return(
     </View>
     ) : (
         <View style={styles.container}>
-            <Text>Your Score: {this.state.correctAnswers}</Text>
-
+          <Text>Your Score: {this.state.correctAnswers}</Text>
             <View style={{alignItems: 'center', justifyContent: 'space-around', flex: 2}}>
-                <View style={styles.container}>
-                <Button
-                    onPress={() => {
-                        }}
-                    buttonStyle={{
-                        backgroundColor: "red",
-                        marginTop: 15,
-                        width: 100,
-                        height: 40,
-                        borderColor: "transparent",
-                        borderWidth: 0,
-                        borderRadius: 5
+              <View style={styles.container}>
+              <Button
+                onPress={() => {
                     }}
-                    title='Back to Initial'
-                /> 
-                </View>
+                buttonStyle={{
+                    backgroundColor: "red",
+                    marginTop: 15,
+                    width: 100,
+                    height: 40,
+                    borderColor: "transparent",
+                    borderWidth: 0,
+                    borderRadius: 5
+                }}
+                title='Back to Initial'
+              /> 
             </View>
+          </View>
         </View>
     )}
     </View>

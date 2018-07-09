@@ -20,12 +20,6 @@ const CustomStatusBar = ({ backgroundColor, ...props }) => {
   );
 }
 
-// const HomeStack = createStackNavigator({
-//   Home: HomeScreen,
-//   Details: DetailsScreen,
-// });
-
-
 const Tab = createMaterialTopTabNavigator(
   {
     Deck: Deck,
@@ -104,27 +98,4 @@ class App extends React.Component {
   }
 }
 
-
 export default App;
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//       <View>
-//         <Tab />
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   // statusBar: {
-//   //   backgroundColor: "#C2185B",
-//   // },
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     height: Constants.statusBarHeight,
-//   },
-// });

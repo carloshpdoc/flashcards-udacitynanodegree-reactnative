@@ -1,12 +1,7 @@
-import React, { Fragment, Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import {  createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
+import React, { Component } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Card from './Card'
 import sample from './setup.json'
-
-// _onPress = () => {
-//     this.props.onPressItem(this.props.id);
-//   };
 
   class CardContent extends Component {
     render() {
@@ -35,7 +30,6 @@ import sample from './setup.json'
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
-    //   justifyContent: 'space-evenly'
     },
 });
 
