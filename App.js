@@ -6,6 +6,7 @@ import NewDecks from './components/NewDecks';
 import Deck from './components/Deck';
 import MainQuiz from './components/MainQuiz';
 import AddCard from './components/addCard';
+import Quiz from './components/Quiz';
 
 const CustomStatusBar = ({ backgroundColor, ...props }) => {
   return (
@@ -59,6 +60,7 @@ const MainNavigator = createStackNavigator({
     screen: MainQuiz,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.title}`,
+        headerBackTitle: null,
         headerTintColor: "black",
         headerStyle: {
           backgroundColor: "white",
@@ -74,17 +76,19 @@ const MainNavigator = createStackNavigator({
       }
     }
   },
-  // QuizMain: {
-  //   screen: QuizMain,
-  //   navigationOptions: {
-  //     headerTintColor: "white",
-  //     headerStyle: {
-  //       backgroundColor: "purple"
-
-  //     }
-  //   }
-  // }
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.title}`,
+      headerBackTitle: null,
+      headerTintColor: "black",
+      headerStyle: {
+        backgroundColor: "white",
+      }
+    })
+  },
 });
+
 class App extends React.Component {
 
   render() {

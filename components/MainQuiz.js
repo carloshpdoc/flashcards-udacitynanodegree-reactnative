@@ -28,12 +28,21 @@ class MainQuiz extends Component {
     data['questions'].push({ question: this.state.question, answer: this.state.answer });
     await storeSaveData(this.props.navigation.state.params.title, data);
     await this.setState({dataCard: data, modalVisible: false});
-    this.props.navigation.setParams({ increaseCount: 'backDeck' });
+    this.props.navigation.navigate('Deck', { backHome: true });
   }
 
-  _AddQuestion = () => {
+  AddQuestion = () => {
     this.setModalVisible(true);
   };
+
+  StartQuiz = async () => {
+    const key = this.props.navigation.state.params.title;
+    const data = await retrieveData(key);
+
+    await this.props.navigation.navigate('Quiz', {
+      title: data.title, questions: data.questions, dataCard: data, countCard: (data.questions).length,
+    });
+  }
 // state = {
 //     title: '',
 //     countCard: '',
@@ -51,7 +60,6 @@ class MainQuiz extends Component {
     if(this.state.dataCard) {
       title = this.state.dataCard.title;
       countCard = (this.state.dataCard.questions).length;
-      console.log('questions: ', this.state.dataCard.questions);
     } else {
       title = this.props.navigation.state.params.title;
       countCard = this.props.navigation.state.params.countCard;
