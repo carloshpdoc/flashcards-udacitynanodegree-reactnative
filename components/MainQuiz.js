@@ -111,15 +111,8 @@ class MainQuiz extends Component {
             </View>
           </View>
         </Modal>
-      <View style={{marginBottom: 10}}>  
+      <View style={styles.button}>  
         <Button
-          icon={
-            <Icon
-              name='arrow-right'
-              size={40}
-              color='pink'
-            />
-          }
           onPress={this.AddQuestion}
           buttonStyle={{
             backgroundColor: "rgba(92, 99,216, 1)",
@@ -132,16 +125,9 @@ class MainQuiz extends Component {
           title='Add Card'
         />
         <Button
-          icon={
-            <Icon
-              name='arrow-left'
-              size={15}
-              color='pink'
-            />
-          }
           onPress={this.StartQuiz}
           buttonStyle={{
-            backgroundColor: "#00A7E1",
+            backgroundColor: "#308400",
             width: 300,
             height: 45,
             marginTop: 10,
@@ -162,7 +148,9 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      backgroundColor: 'white',
+      paddingBottom: 30,
       
     },
     modal: {
@@ -170,7 +158,10 @@ const styles = StyleSheet.create({
       height: 100,
       padding: 5,
       paddingTop: 40,
-    }
+    },
+    button: {
+      paddingBottom: 30,
+    },
 });
 
 

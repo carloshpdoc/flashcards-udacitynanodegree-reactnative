@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Card from './Card'
-import { retrieveAllData, setLocalNotification } from '../helpers/index';
+import { retrieveAllData } from '../helpers/index';
 
 class Deck extends Component {
   static navigationOptions = {
@@ -16,7 +16,6 @@ class Deck extends Component {
   receiveData = async () =>{
     let AllData = await retrieveAllData();  
     await this.setState({ data: AllData, isLoading: false });
-    await setLocalNotification();
   };
   
   async componentDidMount(){
@@ -33,7 +32,7 @@ class Deck extends Component {
       } else {
         const { data } = this.state;
         return (
-          <ScrollView>
+          <ScrollView style={{backgroundColor: "#fff"}}>
             <View style={styles.container}>
             {data && data.map((r, id, arr) => (
               <TouchableOpacity 

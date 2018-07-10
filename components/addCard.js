@@ -61,7 +61,7 @@ render() {
                 buttonStyle={{
                 backgroundColor: "rgba(92, 99,216, 1)",
                 marginTop: 15,
-                width: 160,
+                width: 170,
                 height: 40,
                 borderColor: "transparent",
                 borderWidth: 0,

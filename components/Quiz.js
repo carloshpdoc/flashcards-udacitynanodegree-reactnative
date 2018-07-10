@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
+import { setLocalNotification, clearLocalNotification } from '../helpers/index';
+
 class Quiz extends Component {
 state = {
   dataCard: '',
@@ -13,22 +15,37 @@ state = {
   isLoading: true,
   questions: '',
   count: 1,
-  lastScene: false,
+  haveQuestions: true,
   disabled: true,
 };
 
-onCorrect = (question) => {
+correct = () => { 
+  const { countQuestions, correctAnswers, count, questionIndex } = this.state;
     this.setState({
-        questionIndex: this.state.questionIndex +1,
-        count: this.state.count + 1, 
+        questionIndex: questionIndex +1,
+        count: count + 1,
+        correctAnswers: correctAnswers + 1,
+        haveQuestions: (countQuestions === count)? false: true,
     }); 
     this.showAnswer();
+};
+
+incorrect = () => {
+  const { questionIndex, count, countQuestions } = this.state;
+  this.setState({
+      questionIndex: questionIndex +1,
+      count: count + 1, 
+      haveQuestions: (countQuestions === count)? false: true,
+  }); 
+  this.showAnswer();
 };
 
  componentDidMount(){
     this.setState({dataCard: this.props.navigation.getParam('dataCard'),
     questions: this.props.navigation.getParam('questions'),
     isLoading: false });
+
+    clearLocalNotification().then(setLocalNotification);
 }
 showAnswer = () => {
     this.setState({ disabled: !this.state.disabled, showAnswer: !this.state.showAnswer});
@@ -38,14 +55,18 @@ render() {
   if (this.state.isLoading) {
     return <Text>Loading...</Text>
   } else {
-    const { lastScene, count, questions, questionIndex, 
+    const { haveQuestions, count, questions, questionIndex, 
         correctAnswers, showAnswer, countQuestions,
         disabled } = this.state;
-    const { question, answer } = questions[questionIndex];
+    let question, answer;
+    if(haveQuestions){
+      question = questions[questionIndex].question;
+      answer = questions[questionIndex].answer;
+    }
   
 return(
     <View style={styles.container}>
-    {!lastScene ? (
+    { haveQuestions ? (
     <View>
        <View style={{justifyContent: 'flex-start', flex: 1}}>
           <View>
@@ -73,7 +94,7 @@ return(
                 <Button
                     disabled={disabled} 
                     onPress={() => {
-                        this.onCorrect(question);
+                        this.correct();
                     }}
                     buttonStyle={{
                         backgroundColor: "rgba(92, 99,216, 1)",
@@ -89,7 +110,8 @@ return(
                 <Button
                     disabled={disabled} 
                     onPress={() => {
-                        }}
+                      this.incorrect();
+                    }}
                     buttonStyle={{
                         backgroundColor: "red",
                         marginTop: 15,
@@ -106,12 +128,13 @@ return(
     </View>
     ) : (
         <View style={styles.container}>
-          <Text>Your Score: {this.state.correctAnswers}</Text>
+          <Text>You hit {correctAnswers} of {countQuestions} issues!</Text>
             <View style={{alignItems: 'center', justifyContent: 'space-around', flex: 2}}>
               <View style={styles.container}>
               <Button
                 onPress={() => {
-                    }}
+                  this.props.navigation.navigate('Deck', { backHome: true });
+                }}
                 buttonStyle={{
                     backgroundColor: "red",
                     marginTop: 15,
@@ -121,7 +144,7 @@ return(
                     borderWidth: 0,
                     borderRadius: 5
                 }}
-                title='Back to Initial'
+                title='Back to Initial Deck'
               /> 
             </View>
           </View>
