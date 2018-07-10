@@ -35,11 +35,16 @@ export const storeSaveData = async (key, data) => {
     try {
       let result;
       let allKeys = await AsyncStorage.getAllKeys().then(keys => {
-        return keys ;
+        return keys !== "FlashCards:notifications" ? keys : '';
       });
 
-      if(allKeys === null || allKeys.length === 0 ) {
+      if(allKeys === null || allKeys.length == 0 ) {
         await AsyncStorage.multiSet([['React', JSON.stringify(dataStore[0])], ['JavaScript', JSON.stringify(dataStore[1])]]);
+      }
+
+      let index = allKeys.indexOf("FlashCards:notifications");
+      if (index > -1) {
+        allKeys.splice(index, 1);
       }
 
       receive = await AsyncStorage.multiGet(allKeys).then(data => {

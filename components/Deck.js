@@ -13,16 +13,12 @@ class Deck extends Component {
     isLoading: true,
   };
 
-  receiveData = async () =>{
-    let AllData = await retrieveAllData();  
+  receiveData = async () => {
+    let AllData = await retrieveAllData();
     await this.setState({ data: AllData, isLoading: false });
   };
   
-  async componentDidMount(){
-    this.receiveData();
-  }
-
-  async componentWillReceiveProps(){
+  componentDidMount(){
     this.receiveData();
   }
 
@@ -40,13 +36,13 @@ class Deck extends Component {
                 onPress={() =>
                   this.props.navigation.navigate('DeckStart', { 
                       title: arr[id].title,
-                      countCard: arr[id].questions.length,
+                      countCard: (arr[id].questions).length,
                       })
                   }
               >
                 <Card
                   title={arr[id].title}
-                  countCard={arr[id].questions.length}
+                  countCard={(arr[id].questions).length}
                 />
               </TouchableOpacity>
               ))}
