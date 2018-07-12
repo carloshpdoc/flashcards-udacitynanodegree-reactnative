@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, View , StyleSheet, TextInput } from 'react-native';
+import { Text, View , StyleSheet, TextInput, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
+
+import { storeSaveData } from '../helpers/index';
 
 class NewDecks extends React.Component {
   static navigationOptions = {
@@ -11,8 +13,21 @@ class NewDecks extends React.Component {
     title: '',
   };
 
+onSubmit = async () => {
+  const { title } = this.state;
+  dataCard = {
+    title: title,
+  }
+ await storeSaveData(title, dataCard);
+ await this.props.navigation.navigate('AddCard', { title: title });
+  setTimeout(() => {
+    this.setState({title: ''})
+  }, 1000);
+
+}
   render() {
     const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <View style={styles.cardQuestion}>
@@ -27,10 +42,7 @@ class NewDecks extends React.Component {
         <View style={{flex: 1}}>
           <Button
             onPress={() => {
-              navigate('AddCard', { title: this.state.title });
-              setTimeout(() => {
-                this.setState({title: ''})
-              }, 1000);
+              this.onSubmit();
             }}
             buttonStyle={{
               backgroundColor: "rgba(92, 99,216, 1)",

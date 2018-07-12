@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { setLocalNotification, clearLocalNotification } from '../helpers/index';
 
+
 class Quiz extends Component {
-state = {
-  dataCard: '',
-  countQuestions: this.props.navigation.getParam('countCard'),
-  answer: '',
-  questionIndex: 0,
-  correctAnswers: 0,
-  showAnswer: false,
-  isLoading: true,
-  questions: '',
-  count: 1,
-  haveQuestions: true,
-  disabled: true,
-};
+constructor(props){
+  super(props)
+  this.state = {
+    dataCard: '',
+    countQuestions: 0,
+    answer: '',
+    questionIndex: 0,
+    correctAnswers: 0,
+    showAnswer: false,
+    isLoading: true,
+    questions: '',
+    count: 1,
+    haveQuestions: true,
+    disabled: true,
+  };
+  this.baseState = this.state 
+}
 
 correct = () => { 
   const { countQuestions, correctAnswers, count, questionIndex } = this.state;
@@ -40,29 +45,46 @@ incorrect = () => {
   this.showAnswer();
 };
 
- componentDidMount(){
-    this.setState({dataCard: this.props.navigation.getParam('dataCard'),
+updateState = () => {
+  this.setState({dataCard: this.props.navigation.getParam('dataCard'),
     questions: this.props.navigation.getParam('questions'),
+    countQuestions: this.props.navigation.getParam('countCard'),
     isLoading: false });
-
-    clearLocalNotification().then(setLocalNotification);
 }
+
+ componentDidMount(){
+   this.updateState();
+}
+
 showAnswer = () => {
     this.setState({ disabled: !this.state.disabled, showAnswer: !this.state.showAnswer});
 }
 
+restart = () => {
+  this.setState(this.baseState);
+  
+  setTimeout(() => {
+    this.updateState();
+  }, 500);
+}
+
 render() {
   if (this.state.isLoading) {
-    return <Text>Loading...</Text>
+    return <View style={[styles.loadingContainer, styles.loadingHori]}>>
+              <ActivityIndicator size="large" color="#00ff00" />
+           </View>
   } else {
     const { haveQuestions, count, questions, questionIndex, 
         correctAnswers, showAnswer, countQuestions,
         disabled } = this.state;
+
     let question, answer;
     if(haveQuestions){
       question = questions[questionIndex].question;
       answer = questions[questionIndex].answer;
-    }
+    } else {
+      clearLocalNotification().then(setLocalNotification);
+   }
   
 return(
     <View style={styles.container}>
@@ -131,14 +153,29 @@ return(
           <Text>You hit {correctAnswers} of {countQuestions} issues!</Text>
             <View style={{alignItems: 'center', justifyContent: 'space-around', flex: 2}}>
               <View style={styles.container}>
+              <Button 
+                    onPress={()=>{
+                      this.restart();
+                    }}
+                    buttonStyle={{
+                        backgroundColor: "rgba(92, 99,216, 1)",
+                        marginTop: 15,
+                        width: 170,
+                        height: 40,
+                        borderColor: "transparent",
+                        borderWidth: 0,
+                        borderRadius: 5
+                    }}
+                    title='Restart Quiz'
+                /> 
               <Button
                 onPress={() => {
-                  this.props.navigation.navigate('Deck', { backHome: true });
+                  this.props.navigation.navigate('DeckStart', { backHome: true });
                 }}
                 buttonStyle={{
-                    backgroundColor: "red",
+                    backgroundColor: "black",
                     marginTop: 15,
-                    width: 100,
+                    width: 170,
                     height: 40,
                     borderColor: "transparent",
                     borderWidth: 0,
@@ -171,8 +208,20 @@ const styles = StyleSheet.create({
     },
     answer: {
         paddingTop: 5,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+    },
+    loadingHori: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 300,
+      padding: 10,
     }
-    
 });
 
 export default Quiz;

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Text, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { storeSaveData } from '../helpers/index';
-
 
 class addCard extends Component {
 
@@ -18,20 +17,30 @@ state = {
     dataCard: '',
 };
 
-submitCard = async _ => {
+submitCard = async () => {
     const key = this.state.title;
-    dataCard = {
-        title: key,
-        questions: [
-            {
-              question: this.state.question,
-              answer: this.state.answer,
-            }
-        ]
-    }
+    const { question, answer } = this.state;
 
-    await storeSaveData(key, dataCard);
-    this.props.navigation.navigate('Deck', { backHome: true });
+    if (question == ''|| answer == '') {
+        Alert.alert('Atenção!', 
+        'Você não preencheu todos os campos!',[
+            {text: 'OK', onPress: () => 
+              this.props.navigation.navigate('NewDeck'),
+            },
+          ]);
+    } else {
+        dataCard = {
+            title: key,
+            questions: [
+                {
+                question: question,
+                answer: answer,
+                }
+            ]
+        }
+       await storeSaveData(key, dataCard);
+       this.props.navigation.navigate('Deck', { backHome: true });
+    }
 }
 
 render() {

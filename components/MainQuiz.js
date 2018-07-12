@@ -18,11 +18,26 @@ class MainQuiz extends Component {
 
   submitData = async _ => {
     const key = this.props.navigation.state.params.title;
+    const { question, answer } = this.state;
     const data = await retrieveData(key);
-  
-    data['questions'].push({ question: this.state.question, answer: this.state.answer });
-    await storeSaveData(this.props.navigation.state.params.title, data);
-    await this.setState({dataCard: data, modalVisible: false});
+ 
+    let dataCard;
+    if(data.questions === undefined){
+      dataCard = {
+        ...data,
+        questions: [
+            {
+            question: question,
+            answer: answer,
+            }
+        ]
+      }
+    } else {
+      data['questions'].push({ question: question, answer: answer });
+      dataCard = data;
+    }
+    await storeSaveData(this.props.navigation.state.params.title, dataCard);
+    await this.setState({dataCard: dataCard, modalVisible: false});
     this.props.navigation.navigate('Deck', { backHome: true });
   }
 
@@ -43,7 +58,7 @@ class MainQuiz extends Component {
     let title, countCard;
     if(this.state.dataCard) {
       title = this.state.dataCard.title;
-      countCard = (this.state.dataCard.questions).length;
+      countCard = (this.state.dataCard.questions===undefined)? 0 : (this.state.dataCard.questions).length;
     } else {
       title = this.props.navigation.state.params.title;
       countCard = this.props.navigation.state.params.countCard;
