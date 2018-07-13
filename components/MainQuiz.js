@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Modal, TextInput, Text } from 'react-native';
+import { View, StyleSheet, Modal, TextInput, Text, Alert } from 'react-native';
 import Card from './Card';
-import { Button, Icon } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { storeSaveData, retrieveData } from '../helpers/index';
 
 class MainQuiz extends Component {
@@ -22,23 +22,32 @@ class MainQuiz extends Component {
     const data = await retrieveData(key);
  
     let dataCard;
-    if(data.questions === undefined){
-      dataCard = {
-        ...data,
-        questions: [
-            {
-            question: question,
-            answer: answer,
-            }
-        ]
-      }
+    if (question.trim() == false || answer.trim()== false) {
+      Alert.alert('Atenção!', 
+      'Você não preencheu todos os campos!',[
+          {text: 'OK', onPress: () => 
+           this.setState({question: '', answer:''})
+          },
+        ]);
     } else {
-      data['questions'].push({ question: question, answer: answer });
-      dataCard = data;
+      if(data.questions === undefined){
+        dataCard = {
+          ...data,
+          questions: [
+              {
+              question: question,
+              answer: answer,
+              }
+          ]
+        }
+      } else {
+        data['questions'].push({ question: question, answer: answer });
+        dataCard = data;
+      }
+      await storeSaveData(this.props.navigation.state.params.title, dataCard);
+      await this.setState({dataCard: dataCard, modalVisible: false});
+      this.props.navigation.navigate('Deck', { backHome: true });
     }
-    await storeSaveData(this.props.navigation.state.params.title, dataCard);
-    await this.setState({dataCard: dataCard, modalVisible: false});
-    this.props.navigation.navigate('Deck', { backHome: true });
   }
 
   AddQuestion = () => {

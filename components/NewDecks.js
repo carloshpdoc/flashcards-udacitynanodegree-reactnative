@@ -15,7 +15,7 @@ class NewDecks extends React.Component {
 
 onSubmit = async () => {
   const { title } = this.state;
-  if(title.length == 0 || title== ' ') {
+  if(title.trim()==false) {
     Alert.alert('Atenção!', 
     'Você não preencheu com um title valido!',[
         {text: 'OK', onPress: () => 

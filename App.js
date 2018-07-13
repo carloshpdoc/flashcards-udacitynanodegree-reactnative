@@ -5,7 +5,6 @@ import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navig
 import NewDecks from './components/NewDecks';
 import Deck from './components/Deck';
 import MainQuiz from './components/MainQuiz';
-import AddCard from './components/addCard';
 import Quiz from './components/Quiz';
 import { setLocalNotification } from './helpers/index';
 
@@ -63,15 +62,6 @@ const MainNavigator = createStackNavigator({
           backgroundColor: "white",
         }
     }),
-  },
-  AddCard: {
-    screen: AddCard,
-    navigationOptions: {
-      headerTintColor: "black",
-      headerStyle: {
-        backgroundColor: "white",
-      }
-    }
   },
   Quiz: {
     screen: Quiz,
