@@ -2,6 +2,9 @@
 # This project is a Udacity nanodegrees design from developer React!
 Mobile Flashcards: It is a mobile application of questions and answers, made for the third project of Nanogrades.
 
+### Application use in:
+Application tests on IOS and Android devices using the Expo.
+
 ## Install 
 
 This assumes that you have Expo installed and NodeJS.
