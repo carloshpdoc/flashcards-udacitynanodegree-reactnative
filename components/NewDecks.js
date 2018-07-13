@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View , StyleSheet, TextInput, AsyncStorage } from 'react-native';
+import { Text, View , StyleSheet, TextInput, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { storeSaveData } from '../helpers/index';
@@ -15,15 +15,26 @@ class NewDecks extends React.Component {
 
 onSubmit = async () => {
   const { title } = this.state;
-  dataCard = {
-    title: title,
+  if(title.length == 0 || title== ' ') {
+    Alert.alert('Atenção!', 
+    'Você não preencheu com um title valido!',[
+        {text: 'OK', onPress: () => 
+         this.setState({title: ''}),
+        },
+      ]);
+  } else {
+    dataCard = {
+      title: title,
+    }
+   await storeSaveData(title, dataCard);
+   await this.props.navigation.navigate('DeckStart', { 
+            title: title,
+            countCard: 0,
+          });
+    setTimeout(() => {
+      this.setState({title: ''})
+    }, 1000);
   }
- await storeSaveData(title, dataCard);
- await this.props.navigation.navigate('AddCard', { title: title });
-  setTimeout(() => {
-    this.setState({title: ''})
-  }, 1000);
-
 }
   render() {
     const { navigate } = this.props.navigation;
@@ -53,7 +64,7 @@ onSubmit = async () => {
               borderWidth: 0,
               borderRadius: 5
             }}
-            title='Next'
+            title='Submit'
           />
         </View>
       </View>

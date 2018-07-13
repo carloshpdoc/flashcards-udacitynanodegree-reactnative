@@ -140,6 +140,7 @@ class MainQuiz extends Component {
           title='Add Card'
         />
         <Button
+          disabled={countCard==0?true: false} 
           onPress={this.StartQuiz}
           buttonStyle={{
             backgroundColor: "#308400",
