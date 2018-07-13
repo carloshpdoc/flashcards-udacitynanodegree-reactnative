@@ -21,7 +21,7 @@ submitCard = async () => {
     const key = this.state.title;
     const { question, answer } = this.state;
 
-    if (question == ''|| answer == '') {
+    if (question == '' || question== ' ' || answer==' ' || answer == '') {
         Alert.alert('Atenção!', 
         'Você não preencheu todos os campos!',[
             {text: 'OK', onPress: () => 
